@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'main/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
+    <link href="{% static 'main/css/style.css' %}" type="text/css" rel="stylesheet"/>
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'main/js/coach.js' %}"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+
+{% block mainmenu %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">reactionCoach</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+            <div class="navbar-nav justify-content-center col-7">
+                {% for m in menu %}
+                    {% if m.url_name == page_active %}
+                        <a class="nav-link active" href="{% url m.url_name %}">{{ m.title }}</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url m.url_name %}">{{ m.title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% if is_login == True %}
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            User
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">My data</a>
+                            <a class="dropdown-item" href="#">My records</a>
+                            <a class="dropdown-item" href="#">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <form class="d-flex input-group-sm mt-3 mb-1 mt-lg-0 mb-lg-0">
+                    <input class="form-control me-2" type="text" placeholder="Login" aria-label="Login">
+                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
+                    <button class="btn btn-outline-light me-2 text-nowrap" type="submit">Sign in</button>
+                    <a class="btn btn-outline-success text-nowrap" href="#" role="button">Sign up</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock mainmenu %}
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

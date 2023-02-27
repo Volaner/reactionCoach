@@ -1,0 +1,55 @@
+html
+{
+	font-size: 16px;
+}
+
+html .pt-4
+{
+	padding-top: var(--space-4) !important;
+}
+
+html .pt-5
+{
+	padding-top: var(--space-5) !important;
+}
+
+html .pb-4
+{
+	padding-bottom: var(--space-4) !important;
+}
+
+html .pb-5
+{
+	padding-bottom: var(--space-5) !important;
+}
+
+html .mt-4
+{
+	margin-top: var(--space-4) !important;
+}
+
+html .mt-5
+{
+	margin-top: var(--space-5) !important;
+}
+
+html .mb-4
+{
+	margin-bottom: var(--space-4) !important;
+}
+
+html .mb-5
+{
+	margin-bottom: var(--space-5) !important;
+}
+
+:root {
+  --space-5: 5rem;
+  --space-4: 2.3rem;
+}
+
+#task
+{
+	height: 120px;
+	font-size: 80px;
+}
