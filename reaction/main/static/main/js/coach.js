@@ -12,6 +12,11 @@ class Coach
 	#dateBeginning
 	#reaction = 0
 	#btnsTask
+	#btn_1
+	#btn_2
+	#btn_3
+	#btn_4
+	#hasTask = false
 
   	init()
   	{   
@@ -30,7 +35,50 @@ class Coach
 			{
 	    		self.#pressTaskBtn(btn);
 	    	});
+
+	    	let key_number = btn.getAttribute('data-number');
+	    	if(key_number == 1)
+	    	{
+	    		this.#btn_1 = btn;
+	    	}
+	    	else if(key_number == 2)
+	    	{
+	    		this.#btn_2 = btn;
+	    	}
+	    	else if(key_number == 3)
+	    	{
+	    		this.#btn_3 = btn;
+	    	}
+	    	else if(key_number == 4)
+	    	{
+	    		this.#btn_4 = btn;
+	    	}
 		}
+
+		document.addEventListener('keydown', function(event)
+		{
+			if(!self.#hasTask || (keyboardSwitch.type == 'checkbox' && !keyboardSwitch.checked))
+			{
+				return;
+			}
+
+			if (event.code == 'Digit1')
+			{
+		    	self.#checkTask(1);
+		  	}
+		  	else if (event.code == 'Digit2')
+			{
+		    	self.#checkTask(2);
+		  	}
+		  	else if (event.code == 'Digit3')
+			{
+		    	self.#checkTask(3);
+		  	}
+		  	else if (event.code == 'Digit4')
+			{
+		    	self.#checkTask(4);
+		  	}
+		});
   	}
 
   	pressStartBtn()
@@ -78,6 +126,7 @@ class Coach
   	#stop()
   	{
   		this.#running = false;
+  		this.#hasTask = false;
 
   		this.#button.textContent = 'Run';
   		this.#button.classList.remove('btn-danger');
@@ -97,24 +146,67 @@ class Coach
 
   	#pressTaskBtn(btn)
   	{
-  		if(!this.#running)
+  		if(!this.#hasTask)
   		{
   			return;
   		}
 
-  		let my_number = btn.getAttribute('data-number');
+  		let key_number = btn.getAttribute('data-number');
 
-  		if(my_number == this.#task) // Success
+  		this.#checkTask(key_number);
+  	}
+
+  	#createTask()
+  	{
+  		let timeout = this.#getRandomInt(this.#minTimeout, this.#maxTimeout);
+		let self = this;
+
+  		this.#timerId = setTimeout(function()
   		{
+  			self.#hasTask = true;
+
+  			task.classList.remove('text-danger');
+  			task.classList.remove('text-success');
+
+  			self.#task = self.#getRandomInt(1, 4);
+  			task.textContent = self.#task;
+
+  			self.#dateBeginning = new Date;
+
+  			self.#btnSetDefaultColor();
+  		}, timeout);
+  	}
+
+  	#checkTask(key_number)
+  	{
+  		if(key_number == this.#task) // Success
+  		{
+  			this.#hasTask = false;
   			this.#reaction += new Date - this.#dateBeginning;
 
   			task.textContent = '';
 
   			this.#btnSetDefaultColor();
-  			btn.classList.remove('btn-outline-dark');
-  			btn.classList.add('btn-success');
-
-  			this.#createTask();
+  			if(key_number == 1)
+  			{
+  				this.#btn_1.classList.remove('btn-outline-dark');
+  				this.#btn_1.classList.add('btn-success');
+  			}
+  			else if(key_number == 2)
+  			{
+  				this.#btn_2.classList.remove('btn-outline-dark');
+  				this.#btn_2.classList.add('btn-success');
+  			}
+  			else if(key_number == 3)
+  			{
+  				this.#btn_3.classList.remove('btn-outline-dark');
+  				this.#btn_3.classList.add('btn-success');
+  			}
+  			else if(key_number == 4)
+  			{
+  				this.#btn_4.classList.remove('btn-outline-dark');
+  				this.#btn_4.classList.add('btn-success');
+  			}
 
   			this.#counter++;
   			if(this.#counter == this.#taskCount)
@@ -126,32 +218,35 @@ class Coach
 
   				info.textContent = 'Average reaction time: ' + average + 'ms';
   			}
+  			else
+  			{
+	  			this.#createTask();
+  			}
   		}
   		else // Fail
   		{
   			this.#btnSetDefaultColor();
-  			btn.classList.remove('btn-outline-dark');
-  			btn.classList.add('btn-danger');
+  			if(key_number == 1)
+  			{
+  				this.#btn_1.classList.remove('btn-outline-dark');
+  				this.#btn_1.classList.add('btn-danger');
+  			}
+  			else if(key_number == 2)
+  			{
+  				this.#btn_2.classList.remove('btn-outline-dark');
+  				this.#btn_2.classList.add('btn-danger');
+  			}
+  			else if(key_number == 3)
+  			{
+  				this.#btn_3.classList.remove('btn-outline-dark');
+  				this.#btn_3.classList.add('btn-danger');
+  			}
+  			else if(key_number == 4)
+  			{
+  				this.#btn_4.classList.remove('btn-outline-dark');
+  				this.#btn_4.classList.add('btn-danger');
+  			}
   		}
-  	}
-
-  	#createTask()
-  	{
-  		let timeout = this.#getRandomInt(this.#minTimeout, this.#maxTimeout);
-		let self = this;
-
-  		this.#timerId = setTimeout(function()
-  		{
-  			task.classList.remove('text-danger');
-  			task.classList.remove('text-success');
-
-  			self.#task = self.#getRandomInt(1, 4);
-  			task.textContent = self.#task;
-
-  			self.#dateBeginning = new Date;
-
-  			self.#btnSetDefaultColor();
-  		}, timeout);
   	}
 
   	#getRandomInt(min, max)
