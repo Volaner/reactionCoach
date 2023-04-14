@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'reaction.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'reaction_coach',
+        'USER': 'coach',
+        'PASSWORD': 'JFMfPps8abzXINwkJDC0',
+        'HOST': '172.16.36.30',
+        'PORT': '3306',
+        'DEBUG': True
     }
 }
 
