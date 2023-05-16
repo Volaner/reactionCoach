@@ -53,3 +53,14 @@ html .mb-5
 	height: 120px;
 	font-size: 80px;
 }
+
+form.register
+{
+	width: 500px;
+}
+
+.form-error ul
+{
+	list-style-type: none;
+	padding-left: 0;
+}

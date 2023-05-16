@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row pt-5 pb-3">
+        <h1 class="text-center mb-4">{{ h1 }}</h1>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="border rounded-2 p-4 mw-100 register needs-validation" novalidate>
+            {% csrf_token %}
+
+            {% for f in form %}
+            <div class="form-floating mb-3">
+                {{ f }}
+                <label for="{{ f.id_for_label }}">{{f.label}}</label>
+            </div>
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+
+            <div class="text-danger form-error">{{ form.non_field_errors }}</div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

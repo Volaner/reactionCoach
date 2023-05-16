@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+class ResultAdmin(admin.ModelAdmin):
+    list_display = ('id', 'time', 'time_create')
+
+admin.site.register(Result, ResultAdmin)
+
