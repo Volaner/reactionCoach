@@ -18,25 +18,8 @@ class Index(DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         mixin_context = self.get_context(title="reactionCoach - Home", h1='reactionCoach', page_active='home')
-        # context['title'] = 'reactionCoach'
-        # context['menu'] = menu
-        # context['page_active'] = 'home'
-        # context['is_login'] = False
 
         return dict(list(context.items()) + list(mixin_context.items()))
-
-
-"""
-def index(request):
-    context = {
-        'title': 'reactionCoach',
-        'menu': menu,
-        'page_active': 'home',
-        'is_login': False
-    }
-
-    return render(request, 'main/index.html', context)
-"""
 
 
 class Records(DataMixin, ListView):
@@ -88,10 +71,6 @@ def logout_user(request):
     logout(request)
 
     return redirect('login')
-
-
-# menu = [{'title': 'Coach', 'url_name': 'home'},
-#         {'title': 'Records', 'url_name': 'records'}]
 
 
 def get404(request, exception):
