@@ -21,6 +21,7 @@ class Coach
   	constructor()
   	{   
     	this.#button = document.querySelector('#btnstart');
+  		if(this.#button == null){ return }
   		let self = this;
 
     	this.#button.addEventListener("click", function()
