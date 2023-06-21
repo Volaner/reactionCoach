@@ -18,7 +18,7 @@ class Coach
 	#btn_4
 	#hasTask = false
 
-  	init()
+  	constructor()
   	{   
     	this.#button = document.querySelector('#btnstart');
   		let self = this;
@@ -265,9 +265,8 @@ class Coach
   	}
 }
 
-let coach = new Coach();
 
 document.addEventListener("DOMContentLoaded", function()
 {
-	coach.init();
+	new Coach();
 });
