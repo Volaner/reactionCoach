@@ -1,7 +1,6 @@
 class Coach
 {
 	#button
-	#info
 	#running = false
 	#counter = 0
 	#taskCount = 5
@@ -132,7 +131,7 @@ class Coach
   		this.#button.textContent = 'Run';
   		this.#button.classList.remove('btn-danger');
   		this.#button.classList.add('btn-success');
-  		info.textContent = '';
+  		info.innerHTML = '&nbsp;';
 
   		this.#btnSetDefaultColor();
   		task.textContent = '';
