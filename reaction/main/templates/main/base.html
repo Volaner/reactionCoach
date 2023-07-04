@@ -10,6 +10,8 @@
     <link href="{% static 'main/css/style.css' %}" type="text/css" rel="stylesheet"/>
     <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'main/js/coach.js' %}"></script>
+    <script src="{% static 'main/js/form.js' %}"></script>
+    <script src="{% static 'main/js/cookie.js' %}"></script>
 </head>
 <body>
 
@@ -46,10 +48,10 @@
                 </div>
             {% else %}
                 <form class="d-flex input-group-sm mt-3 mb-1 mt-lg-0 mb-lg-0">
-                    <input class="form-control me-2" type="text" placeholder="Login" aria-label="Login">
-                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="Password">
-                    <!--<button class="btn btn-outline-light me-2 text-nowrap" type="submit">Sign in</button>-->
-                    <a class="btn btn-outline-light me-2 text-nowrap" href="{% url 'login' %}" role="button">Sign in</a>
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="text" placeholder="Login" aria-label="Login" name="username">
+                    <input class="form-control me-2" type="password" placeholder="Password" aria-label="Password" name="password">
+                    <button class="btn btn-outline-light me-2 text-nowrap sign_in_sample" type="button">Sign in</button>
                     <a class="btn btn-outline-success text-nowrap" href="{% url 'register' %}" role="button">Sign up</a>
                 </form>
             {% endif %}
