@@ -69,24 +69,6 @@ class LoginUser(DataMixin, LoginView):
         return reverse_lazy('home')
 
 
-# class LoginAjaxSample(View):
-#
-#     def post(self, request):
-#         post = json.loads(request.body)
-#         username = post.get('login')
-#         password = post.get('password')
-#
-#         if username and password:
-#             user = authenticate(username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return JsonResponse(data={'status': 'Done'}, status=200)
-#             else:
-#                 return JsonResponse(data={'status': 'Fail'}, status=200)
-#         else:
-#             return JsonResponse(data={'status': 'login or password is empty'}, status=200)
-
-
 class LoginAjax(View):
 
     def post(self, request):
