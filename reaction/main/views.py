@@ -1,9 +1,10 @@
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, TemplateView
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 import json
 
@@ -92,6 +93,58 @@ class LoginAjax(View):
             return JsonResponse(data={'status': 'password is empty'}, status=200)
         else:
             return JsonResponse(data={'status': 'Error: something is wrong'}, status=200)
+
+
+# class ResetPassword(DataMixin, TemplateView):
+#     template_name = 'main/reset_password.html'
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         mixin_context = self.get_context(title='Forgot your password?', h1='Reset your password')
+#
+#         return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class ResetPassword(DataMixin, PasswordResetView):
+    form_class = PasswordReset
+    success_url = reverse_lazy('resetPasswordEmailSent')
+    template_name = 'main/reset_password.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.request.path.split('/')
+
+        mixin_context = self.get_context(title='Forgot your password?', h1='Reset your password', slug=slug[-2])
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class PasswordResetConfirm(DataMixin, PasswordResetConfirmView):
+    form_class = SetPassword
+    template_name = 'main/password_reset_confirm.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(title='Enter new password', h1='Enter new password')
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class ResetComplete(DataMixin, TemplateView):
+    template_name = 'main/password_reset_complete.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(title='Your password has been reset', h1='Your password has been reset')
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+def test(request, slug: str):
+    return HttpResponse("<h1>"+ slug +"</h1>")
+
+# def reset_complete(request):
+#     return HttpResponse("<h1>Your password was changed</h1>")
 
 
 def logout_user(request):

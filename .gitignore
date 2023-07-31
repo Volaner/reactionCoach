@@ -1,4 +1,6 @@
 /.idea/*
 /*.zip
 /*.rar
-reaction/main/__pycache__/*
+/reaction/main/__pycache__/*
+/reaction/reaction/__pycache__/*
+/venv/Lib/site-packages/django/core/mail/backends/__pycache__/*

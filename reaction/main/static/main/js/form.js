@@ -52,6 +52,30 @@ class Form
 		    	this.#checkRedirect(btn, inputs);
 	    	}
     	}
+
+
+    	let reset_password = document.querySelectorAll('button.reset_password');
+		if(reset_password != null)
+		{
+			for (let btn of reset_password)
+	    	{
+	    		for (let elem of btn.closest('form').getElementsByTagName('input'))
+	    		{
+	    			if(elem instanceof HTMLInputElement)
+	    			{
+	    				elem.oninput = () =>
+						{
+							this.#validateInput(elem)
+						}
+	    			}
+	    		}
+
+	    		btn.addEventListener("click", function()
+				{
+		    		self.#pressResetBtn(btn, inputs);
+		    	});
+	    	}
+		}
 	}
 
 	#ajaxSend = async (url, formData) => {
@@ -181,6 +205,11 @@ class Form
 				inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
 			}
 		}
+	}
+
+	#pressResetBtn(btn)
+	{
+		console.log(btn)
 	}
 
 	#checkRedirect(btn, inputs)
