@@ -10,17 +10,21 @@
             {% csrf_token %}
 
             {% for f in form %}
-            <div class="form-floating mb-3">
-                {{ f }}
-                <label for="{{ f.id_for_label }}">{{f.label}}</label>
-            </div>
-            <div class="form-error">{{ f.errors }}</div>
+                {% if f.errors %}
+                    <div class="form-floating div-input mb-3" data-haserror="1">
+                {% else %}
+                    <div class="form-floating div-input mb-3" data-haserror="0">    
+                {% endif %}
+                    {{ f }}
+                    <label for="{{ f.id_for_label }}">{{f.label}}</label>
+                    <div class="invalid-feedback">{{ f.errors }}</div>
+                </div>
             {% endfor %}
 
-            <div class="text-danger form-error">{{ form.non_field_errors }}</div>
+            <div class="text-danger form-error error_field">{{ form.non_field_errors }}</div>
 
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-dark">Sign up</button>
+                <button type="button" class="btn btn-dark sign_up">Sign up</button>
             </div>
         </form>
     </div>
