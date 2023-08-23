@@ -20,7 +20,12 @@ class Index(DataMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        mixin_context = self.get_context(title="reactionCoach - Home", h1='reactionCoach', page_active='home')
+        mixin_context = self.get_context(
+            title='reactionCoach - Home',
+            description='Aliquam erat volutpat. Proin quis augue id magna accumsan euismod. Donec ornare sagittis nulla ac facilisis. Curabitur accumsan efficitur faucibus. Suspendisse a cursus sapien.',
+            h1='reactionCoach',
+            page_active='home'
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
@@ -45,7 +50,11 @@ class RegisterUser(DataMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        mixin_context = self.get_context(title='Registration', h1='Please, fill in the form')
+        mixin_context = self.get_context(
+            title='Registration',
+            description='Registration new user',
+            h1='Please, fill in the form'
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
@@ -62,7 +71,11 @@ class LoginUser(DataMixin, LoginView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        mixin_context = self.get_context(title='Authorization', h1='Authorization')
+        mixin_context = self.get_context(
+            title='Authorization',
+            description='Authorization user',
+            h1='Authorization'
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
@@ -104,7 +117,11 @@ class ResetPassword(DataMixin, PasswordResetView):
         context = super().get_context_data(**kwargs)
         slug = self.request.path.split('/')
 
-        mixin_context = self.get_context(title='Forgot your password?', h1='Reset your password', slug=slug[-2])
+        mixin_context = self.get_context(
+            title='Forgot your password?',
+            description='You can change your password on this page',
+            h1='Reset your password', slug=slug[-2]
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
@@ -115,7 +132,11 @@ class PasswordResetConfirm(DataMixin, PasswordResetConfirmView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        mixin_context = self.get_context(title='Enter new password', h1='Enter new password')
+        mixin_context = self.get_context(
+            title='Enter new password',
+            description='Page with password reset confirm',
+            h1='Enter new password'
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
@@ -125,7 +146,11 @@ class ResetComplete(DataMixin, TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        mixin_context = self.get_context(title='Your password has been reset', h1='Your password has been reset')
+        mixin_context = self.get_context(
+            title='Your password has been reset',
+            description='Your password has been reset. You can log in with your new password',
+            h1='Your password has been reset'
+        )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
