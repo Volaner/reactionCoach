@@ -266,6 +266,7 @@ class Form
 	            	else if(response.status == 'Fail')// Invalid login or password
 	            	{
 	            		setCookie('authorizationStatus', 'Invalid login or password');
+	            		setCookie('username', username);
 
 	            		window.location.href = this.#loginPage;
 	            	}
@@ -285,10 +286,67 @@ class Form
 			else
 			{
 				setCookie('authorizationStatus', 'password is empty');
+				setCookie('username', username);
 			}
 
 			window.location.href = this.#loginPage;
 		}
+	}
+
+	#checkRedirect(btn, inputs)
+	{
+		let status = getCookie('authorizationStatus');
+		let username = getCookie('username');
+
+    	if(typeof(status) == 'undefined')
+    	{
+    		return;
+	    }
+	    else
+	    {
+	    	deleteCookie('authorizationStatus');
+	    }
+
+    	if(status == 'username and password is empty')
+    	{
+    		inputs.username.classList.add('is-invalid');
+    		inputs.password.classList.add('is-invalid');
+    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
+    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
+    	}
+    	else if(status == 'username is empty')
+    	{
+    		inputs.username.classList.add('is-invalid');
+    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
+    	}
+    	else if(status == 'password is empty')
+    	{
+    		inputs.password.classList.add('is-invalid');
+    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
+
+    		if(typeof(username) != 'undefined')
+    		{
+    			inputs.username.value = username;
+    		}
+    	}
+    	else if(status == 'Invalid login or password')
+    	{
+    		inputs.username.classList.add('is-invalid');
+    		inputs.password.classList.add('is-invalid');
+    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
+    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
+
+    		btn.closest('form').querySelector('div.form-error').textContent = 'Invalid login or password';
+
+    		if(typeof(username) != 'undefined')
+    		{
+    			inputs.username.value = username;
+    		}
+    	}
+    	else
+    	{
+    		console.log('unknown status - ' + status);
+    	}
 	}
 
 	#pressSigninBtn(btn, inputs)
@@ -428,51 +486,6 @@ class Form
 		{
 			form.submit()
 		}
-	}
-
-	#checkRedirect(btn, inputs)
-	{
-		let status = getCookie('authorizationStatus');
-
-    	if(typeof(status) == 'undefined')
-    	{
-    		return;
-	    }
-	    else
-	    {
-	    	deleteCookie('authorizationStatus');
-	    }
-
-    	if(status == 'username and password is empty')
-    	{
-    		inputs.username.classList.add('is-invalid');
-    		inputs.password.classList.add('is-invalid');
-    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
-    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
-    	}
-    	else if(status == 'username is empty')
-    	{
-    		inputs.username.classList.add('is-invalid');
-    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
-    	}
-    	else if(status == 'password is empty')
-    	{
-    		inputs.password.classList.add('is-invalid');
-    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;	
-    	}
-    	else if(status == 'Invalid login or password')
-    	{
-    		inputs.username.classList.add('is-invalid');
-    		inputs.password.classList.add('is-invalid');
-    		inputs.username.nextElementSibling.textContent = this.#usernameIsinvalidLabel;
-    		inputs.password.nextElementSibling.textContent = this.#passwordIsinvalidLabel;
-
-    		btn.closest('form').querySelector('div.form-error').textContent = 'Invalid login or password';
-    	}
-    	else
-    	{
-    		console.log('unknown status - ' + status);
-    	}
 	}
 
 	#checkInputsValidationOnStartup(btn)
