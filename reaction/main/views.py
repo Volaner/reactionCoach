@@ -95,16 +95,6 @@ class LoginAjax(View):
             return JsonResponse(data={'status': 'Error: something is wrong'}, status=200)
 
 
-# class ResetPassword(DataMixin, TemplateView):
-#     template_name = 'main/reset_password.html'
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         mixin_context = self.get_context(title='Forgot your password?', h1='Reset your password')
-#
-#         return dict(list(context.items()) + list(mixin_context.items()))
-
-
 class ResetPassword(DataMixin, PasswordResetView):
     form_class = PasswordReset
     success_url = reverse_lazy('resetPasswordEmailSent')
