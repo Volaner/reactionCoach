@@ -158,9 +158,6 @@ class ResetComplete(DataMixin, TemplateView):
 def test(request, slug: str):
     return HttpResponse("<h1>"+ slug +"</h1>")
 
-# def reset_complete(request):
-#     return HttpResponse("<h1>Your password was changed</h1>")
-
 
 def logout_user(request):
     logout(request)
