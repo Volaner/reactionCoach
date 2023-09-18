@@ -606,7 +606,7 @@ class Form
 		}
 		else
 		{
-
+			return false
 		}
 	}
 }
