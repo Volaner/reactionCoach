@@ -213,6 +213,8 @@ class Coach
   			if(this.#counter == this.#taskCount)
   			{
   				let average = Math.round(this.#reaction / this.#taskCount);
+  				let checkbox = document.getElementById('keyboardSwitch');
+  				let enable_keyboard = (checkbox.checked) ? 1 : 0;
 
   				this.#counter = 0;
   				this.#stop();
@@ -221,6 +223,7 @@ class Coach
 
   				let data = JSON.stringify({
 		    		time: average,
+		    		enable_keyboard: enable_keyboard
 		    	});
 
     			this.#ajaxSend(this.#ResultSendUrl, data)

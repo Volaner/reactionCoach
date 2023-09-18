@@ -9,6 +9,7 @@ def get_default_user():
 class Result(models.Model):
     time = models.FloatField()
     time_create = models.DateTimeField(auto_now_add=True)
+    enable_keyboard = models.BooleanField(default=0)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET(get_default_user),

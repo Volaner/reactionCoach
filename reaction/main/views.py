@@ -114,10 +114,11 @@ class ResultSend(View):
     def post(self, request):
         post = json.loads(request.body)
         time = post.get('time')
+        enable_keyboard = post.get('enable_keyboard')
 
         if request.user.is_authenticated:
             try:
-                Result.objects.create(time=time, user=request.user)
+                Result.objects.create(time=time, enable_keyboard=enable_keyboard, user=request.user)
 
                 message = 'Record added successfully for user - ' + request.user.username
                 return JsonResponse(data={'message': message}, status=200)
@@ -129,7 +130,7 @@ class ResultSend(View):
             default_user = get_user_model().objects.get_or_create(username='guest')[0]
 
             try:
-                Result.objects.create(time=time, user=default_user)
+                Result.objects.create(time=time, enable_keyboard=enable_keyboard, user=default_user)
 
                 message = 'Record added successfully for user - ' + default_user.username
                 return JsonResponse(data={'message': message}, status=200)
