@@ -3,7 +3,7 @@ class Coach
 	#button
 	#running = false
 	#counter = 0
-	#taskCount = 5
+	#taskCount = 10
 	#timerId
 	#minTimeout = 300
 	#maxTimeout = 2000
@@ -16,6 +16,7 @@ class Coach
 	#btn_3
 	#btn_4
 	#hasTask = false
+	#ResultSendUrl = '/result_send/'
 
   	constructor()
   	{   
@@ -217,7 +218,18 @@ class Coach
   				this.#stop();
 
   				info.textContent = 'Average reaction time: ' + average + 'ms';
-  			}
+
+  				let data = JSON.stringify({
+		    		time: average,
+		    	});
+
+    			this.#ajaxSend(this.#ResultSendUrl, data)
+		            .then((response) =>
+		            {
+		            	console.log('coach.js - ' + response.message)
+		            })
+			        .catch((err) => console.error(err))
+		  			}
   			else
   			{
 	  			this.#createTask();
@@ -263,6 +275,22 @@ class Coach
 			btn.classList.add('btn-outline-dark');
 		}
   	}
+
+  	#ajaxSend = async (url, data) => {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {'X-CSRFToken': getCookie('csrftoken')},
+            body: data
+        });
+        if (!response.ok)
+        {
+            throw new Error('HTTP error, status: ' + response.status);
+        }
+        else
+        {
+        	return await response.json();
+        }
+    }
 }
 
 

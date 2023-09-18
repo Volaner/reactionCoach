@@ -7,6 +7,7 @@ urlpatterns = [
     path('records/', Records.as_view(), name='records'),
     path('login/', LoginUser.as_view(), name='login'),
     path('login_ajax/', LoginAjax.as_view(), name='loginAjax'),
+    path('result_send/', ResultSend.as_view(), name='result_send'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirm.as_view(), name='password_reset_confirm'),
     path('reset_password/', ResetPassword.as_view(), name='resetPassword'),
     path('reset_password/email_sent/', ResetPassword.as_view(), name='resetPasswordEmailSent'),

@@ -1,6 +1,7 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -9,7 +10,7 @@ from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 import json
 
 from .forms import *
-from .models import *
+from .models import Result
 from .mixins import *
 
 
@@ -106,6 +107,36 @@ class LoginAjax(View):
             return JsonResponse(data={'status': 'password is empty'}, status=200)
         else:
             return JsonResponse(data={'status': 'Error: something is wrong'}, status=200)
+
+
+class ResultSend(View):
+
+    def post(self, request):
+        post = json.loads(request.body)
+        time = post.get('time')
+
+        if request.user.is_authenticated:
+            try:
+                Result.objects.create(time=time, user=request.user)
+
+                message = 'Record added successfully for user - ' + request.user.username
+                return JsonResponse(data={'message': message}, status=200)
+            except Exception as e:
+                error_text = str(e)
+                message = 'Error: Added failed for user - ' + request.user.username + '. ' + error_text
+                return JsonResponse(data={'message': message}, status=200)
+        else:
+            default_user = get_user_model().objects.get_or_create(username='guest')[0]
+
+            try:
+                Result.objects.create(time=time, user=default_user)
+
+                message = 'Record added successfully for user - ' + default_user.username
+                return JsonResponse(data={'message': message}, status=200)
+            except Exception as e:
+                error_text = str(e)
+                message = 'Error: Added failed for user - ' + default_user.username + '. ' + error_text
+                return JsonResponse(data={'message': message}, status=200)
 
 
 class ResetPassword(DataMixin, PasswordResetView):
