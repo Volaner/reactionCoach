@@ -64,3 +64,13 @@ form.register
 	list-style-type: none;
 	padding-left: 0;
 }
+
+.table_wrap
+{
+	max-width: 800px;
+}
+
+.table_wrap .nav-link
+{
+	color: var(--bs-success);
+}

@@ -15,4 +15,5 @@ urlpatterns = [
     path('password_reset_complete/', ResetComplete.as_view(), name='password_reset_complete'),
     path('logout/', logout_user, name='logout'),
     path('register/', RegisterUser.as_view(), name='register'),
+    path('personal_records/', PersonalRecords.as_view(), name='personal_records'),
 ]

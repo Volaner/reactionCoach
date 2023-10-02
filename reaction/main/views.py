@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -42,6 +43,20 @@ class Records(DataMixin, ListView):
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
+
+class PersonalRecords(LoginRequiredMixin, DataMixin, ListView):
+    model = Result
+    template_name = 'main/personal_records.html'
+    context_object_name = 'result'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(title="reactionCoach - Your records", h1='Your records')
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+    def get_queryset(self):
+        return Result.objects.filter(user=self.request.user.pk).order_by('time')
 
 class RegisterUser(DataMixin, CreateView):
     # form_class = UserCreationForm
