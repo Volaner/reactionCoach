@@ -212,7 +212,7 @@ class Coach
   			this.#counter++;
   			if(this.#counter == this.#taskCount)
   			{
-  				let average = Math.round(this.#reaction / this.#taskCount);
+  				let average = Math.round(this.#reaction / this.#taskCount)/1000;
   				let checkbox = document.getElementById('keyboardSwitch');
   				let enable_keyboard = (checkbox.checked) ? 1 : 0;
 
