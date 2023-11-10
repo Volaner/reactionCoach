@@ -120,8 +120,6 @@ class Coach
 	  			counter--;
   			}
   		}, 1000);
-
-  		console.log('run');
   	}
 
   	#stop()
@@ -141,8 +139,6 @@ class Coach
 		clearTimeout(this.#timerId);
 
 		this.#reaction = 0;
-
- 		console.log('stop');
   	}
 
   	#pressTaskBtn(btn)
