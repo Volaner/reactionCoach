@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from .models import *
 
 menu = [{'title': 'Coach', 'url_name': 'home'},
@@ -11,5 +13,7 @@ class DataMixin:
         else:
             context['is_login'] = True
         context['menu'] = menu
+
+        context['date'] = datetime.now().year
 
         return context
