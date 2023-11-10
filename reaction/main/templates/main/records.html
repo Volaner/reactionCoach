@@ -3,32 +3,63 @@
 {% block content %}
     <div class="row pt-5 pb-5">
         <h1 class="text-center mb-4">{{ h1 }}</h1>
-        <p class="mb-4">Aliquam erat volutpat. Proin quis augue id magna accumsan euismod. Donec ornare sagittis nulla ac facilisis. Curabitur accumsan efficitur faucibus. Suspendisse a cursus sapien. Pellentesque congue faucibus interdum. Integer in pulvinar nisl, id interdum libero. Phasellus eget eros ipsum. Donec eu dapibus nisi. Nunc tortor nisl, dictum eu viverra non, mollis a ligula. Duis molestie feugiat libero, a pretium est accumsan et. Nunc non quam nibh. Aliquam erat volutpat. Vestibulum consectetur dui a massa dapibus pellentesque. Suspendisse consectetur sapien felis, sit amet tempor nisl dapibus id. Etiam non dui nec dui consequat fringilla ornare eget lorem.</p>
-        <table class="personal_all table text-center">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">User</th>
-                    <th scope="col">Average time (seconds)</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">With keyboard</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in object_list %}
-                    <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ row.user.username }}</td>
-                        <td>{{ row.time }}</td>
-                        <td>{{ row.time_create|date:"d.m.Y H:i" }}</td>
-                        {% if row.enable_keyboard %}
-                            <td>yes</td>
-                        {% else %}
-                            <td>no</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    </div>
+    <div class="row justify-content-center">
+        <div class="table_wrap">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">With keyboard</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Only mouse</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <table class="personal_all table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Average time (seconds)</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in object_list.enable_keyboard %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ row.user.username }}</td>
+                                    <td>{{ row.time }}</td>
+                                    <td>{{ row.time_create|date:"d.m.Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade show" id="contact-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <table class="personal_all table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Average time (seconds)</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in object_list.disable_keyboard %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ row.user.username }}</td>
+                                    <td>{{ row.time }}</td>
+                                    <td>{{ row.time_create|date:"d.m.Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

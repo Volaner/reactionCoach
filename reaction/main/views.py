@@ -3,6 +3,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.auth.models import User
+from django.db.models import Min
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -37,11 +38,31 @@ class Records(DataMixin, ListView):
     template_name = 'main/records.html'
     context_object_name = 'result'
 
+    def __get_user(self, chart):
+        chart = sorted(chart, key=lambda item: item['time'])
+        users = []
+
+        for item in chart:
+            user_result = Result.objects.get(user_id=item['user'], time=item['time'])
+            users.append(user_result)
+
+        return users
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         mixin_context = self.get_context(title="reactionCoach - Records", h1='Records', page_active='records')
 
         return dict(list(context.items()) + list(mixin_context.items()))
+
+    def get_queryset(self):
+        chart = Result.objects.values('user').filter(enable_keyboard=1).annotate(time=Min('time'))[:10]
+        chart_results = dict()
+        chart_results['enable_keyboard'] = self.__get_user(chart)
+
+        chart = Result.objects.values('user').filter(enable_keyboard=0).annotate(time=Min('time'))[:10]
+        chart_results['disable_keyboard'] = self.__get_user(chart)
+
+        return chart_results
 
 
 class PersonalRecords(LoginRequiredMixin, DataMixin, ListView):
@@ -57,6 +78,7 @@ class PersonalRecords(LoginRequiredMixin, DataMixin, ListView):
 
     def get_queryset(self):
         return Result.objects.filter(user=self.request.user.pk).order_by('time')
+
 
 class RegisterUser(DataMixin, CreateView):
     # form_class = UserCreationForm
