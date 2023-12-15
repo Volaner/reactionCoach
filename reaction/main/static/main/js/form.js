@@ -15,6 +15,7 @@ class Form
 	#signupBtnClicked = 0
 	#resetBtnClicked = 0
 	#resetConfirmBtnClicked = 0
+	#changePasswordBtnClicked = 0
 
 	constructor(urls)
 	{
@@ -124,14 +125,73 @@ class Form
 				{
 					if(this.#resetConfirmBtnClicked)
 					{
-						this.#validatePassword(password1, password2)
+						this.#validateNewPassword(password1, password2)
 					}
 				})
 				password2.addEventListener('input', () => 
 				{
 					if(this.#resetConfirmBtnClicked)
 					{
-						this.#validatePassword(password1, password2)
+						this.#validateNewPassword(password1, password2)
+					}
+				})
+			}
+		}
+
+		// Change password (If user doesn't forget his password)
+		let btn_change_password = document.querySelectorAll('button.change_password');
+
+		if(btn_change_password != null)
+		{
+			for (let btn of btn_change_password)
+			{
+				let old_password
+				let new_password1
+	    		let new_password2
+
+				self.#checkInputsValidationOnStartup(btn)
+
+				btn.addEventListener("click", function()
+				{
+		    		self.#pressChangePasswordBtn(btn);
+		    	});
+
+		    	// Bind validation inputs when user change input after first btn_change_password click
+	    		for (let input of btn.closest('form').getElementsByTagName('input'))
+				{
+					if(input.name == 'old_password')
+					{
+						old_password = input
+					}
+					else if(input.name == 'new_password1')
+					{
+						new_password1 = input
+					}
+					else if(input.name == 'new_password2')
+					{
+						new_password2 = input
+					}
+				}
+
+				old_password.addEventListener('input', () => 
+				{
+					if(this.#changePasswordBtnClicked)
+					{
+						this.#validateOldPassword(old_password)
+					}
+				})
+		    	new_password1.addEventListener('input', () => 
+				{
+					if(this.#changePasswordBtnClicked)
+					{
+						this.#validateNewPassword(new_password1, new_password2)
+					}
+				})
+				new_password2.addEventListener('input', () => 
+				{
+					if(this.#changePasswordBtnClicked)
+					{
+						this.#validateNewPassword(new_password1, new_password2)
 					}
 				})
 			}
@@ -190,14 +250,14 @@ class Form
 				{
 					if(this.#signupBtnClicked)
 					{
-						this.#validatePassword(password1, password2)
+						this.#validateNewPassword(password1, password2)
 					}
 				})
 				password2.addEventListener('input', () => 
 				{
 					if(this.#signupBtnClicked)
 					{
-						this.#validatePassword(password1, password2)
+						this.#validateNewPassword(password1, password2)
 					}
 				})
 	    	}
@@ -432,7 +492,7 @@ class Form
 
 		if((typeof(password1) != 'undefined' && password1 !== null) && (typeof(password2) != 'undefined' && password2 !== null))
 		{
-		    if(this.#validatePassword(password1, password2))
+		    if(this.#validateNewPassword(password1, password2))
 			{
 				form.submit()
 			}
@@ -476,7 +536,7 @@ class Form
 
 		if((typeof(password1) != 'undefined' && password1 !== null) && (typeof(password2) != 'undefined' && password2 !== null))
 		{
-		    if(!this.#validatePassword(password1, password2))
+		    if(!this.#validateNewPassword(password1, password2))
 			{
 				isInvalid = true;
 			}
@@ -485,6 +545,46 @@ class Form
 		if(!isInvalid)
 		{
 			form.submit()
+		}
+	}
+
+	#pressChangePasswordBtn(btn)
+	{
+		let isInvalid = false
+		let form = btn.closest('form')
+		let old_password
+		let new_password1
+		let new_password2
+
+		this.#changePasswordBtnClicked = 1
+
+		for (let input of form.getElementsByTagName('input'))
+		{
+			if(input.name == 'old_password')
+			{
+				old_password = input
+			}
+			else if(input.name == 'new_password1')
+			{
+				new_password1 = input
+			}
+			else if(input.name == 'new_password2')
+			{
+				new_password2 = input
+			}
+		}
+
+		if((typeof(old_password) != 'undefined' && old_password !== null) &&
+			(typeof(new_password1) != 'undefined' && new_password1 !== null) &&
+			(typeof(new_password2) != 'undefined' && new_password2 !== null))
+		{
+			let validate_old_password = this.#validateOldPassword(old_password)
+			let validate_new_password = this.#validateNewPassword(new_password1, new_password2)
+
+		    if(validate_old_password && validate_new_password)
+			{
+				form.submit()
+			}
 		}
 	}
 
@@ -557,7 +657,7 @@ class Form
 		}
 	}
 
-	#validatePassword(password1, password2)
+	#validateNewPassword(password1, password2)
 	{
 		let feedback_input = password2.closest('div').querySelector('div.invalid-feedback')
 		let result
@@ -607,6 +707,25 @@ class Form
 		else
 		{
 			return false
+		}
+	}
+
+	#validateOldPassword(password)
+	{
+		let feedback_input = password.closest('div').querySelector('div.invalid-feedback')
+
+		if(password.value == '')
+		{
+			feedback_input.textContent = 'This field is required.'
+			password.classList.add('is-invalid')
+
+			return false
+		}
+		else
+		{
+			password.classList.remove('is-invalid')
+
+			return true
 		}
 	}
 }

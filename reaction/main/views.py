@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
 from django.contrib.auth.models import User
 from django.db.models import Min
 from django.shortcuts import render, redirect
@@ -219,6 +219,36 @@ class ResetComplete(DataMixin, TemplateView):
             title='Your password has been reset',
             description='Your password has been reset. You can log in with your new password',
             h1='Your password has been reset'
+        )
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class ChangePassword(DataMixin, PasswordChangeView):
+    form_class = ChangePassword
+    success_url = reverse_lazy('password_change_complete')
+    template_name = 'main/change_password.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(
+            title='Change your password',
+            description='If you want, you can change your password here.',
+            h1='Change your password'
+        )
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class ChangePasswordComplete(DataMixin, TemplateView):
+    template_name = 'main/password_change_complete.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(
+            title='Your password has been change',
+            description='Your password has been change',
+            h1='Change password'
         )
 
         return dict(list(context.items()) + list(mixin_context.items()))
