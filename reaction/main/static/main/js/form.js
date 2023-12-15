@@ -669,6 +669,14 @@ class Form
 
 			result = false
 		}
+		else if(password1.value.match(this.#passwordRegexp) === null)
+		{
+			feedback_input.textContent = this.#passwordRegexpFailMessage
+			password1.classList.add('is-invalid')
+			password2.classList.add('is-invalid')
+
+			result = false
+		}
 		else if(password2.value == '')
 		{
 			feedback_input.textContent = 'This field is required.'
@@ -681,14 +689,6 @@ class Form
 			feedback_input.textContent = 'The two password fields didn’t match.';
 			password1.classList.add('is-invalid');
 			password2.classList.add('is-invalid');
-
-			result = false
-		}
-		else if(password1.value.match(this.#passwordRegexp) === null)
-		{
-			feedback_input.textContent = this.#passwordRegexpFailMessage
-			password1.classList.add('is-invalid')
-			password2.classList.add('is-invalid')
 
 			result = false
 		}
