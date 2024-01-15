@@ -44,8 +44,8 @@
                             {{user.username}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'change_password' %}">My data</a>
-                            <a class="dropdown-item" href="{% url 'personal_records' %}">My records</a>
+                            <a class="dropdown-item" href="{% url 'your_profile' %}">Your profile</a>
+                            <a class="dropdown-item" href="{% url 'personal_records' %}">Your records</a>
                             <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
                         </div>
                     </div>
@@ -65,6 +65,18 @@
 {% endblock mainmenu %}
 
 <div class="container min-vh-100">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {% else %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {% endif %}
+            <strong>{{ message.tags | title }}!</strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
     {% block content %}
     {% endblock %}
 </div>

@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+	<div class="row pt-5 pb-3">
+        <h1 class="text-center mb-4">{{ h1 }}</h1>
+        <p class="text-center">Attantion this action is not reversible!</p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <form method="post" class="border rounded-2 p-4 mw-100 register needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                <div class="form-floating div-input mb-3">
+                    <input type="text"  id="answer" name="answer" class="form-control" placeholder="" required="">
+                    <label for="answer">If you are sure write 'Delete' here</label>
+                    <div class="invalid-feedback">Your answer is incorrect</div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-danger delete_user">Delete account</button>
+            </div>
+    	</form>
+    </div>
+{% endblock %}

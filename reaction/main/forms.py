@@ -45,3 +45,12 @@ class ChangePassword(PasswordChangeForm):
                                     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
     new_password2 = forms.CharField(label='Confirm password',
                                     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
+
+
+class YourProfileForm(forms.ModelForm):
+    email = forms.EmailField(label='Email',
+                             widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': ''}))
+
+    class Meta:
+        model = User
+        fields = ('email',)

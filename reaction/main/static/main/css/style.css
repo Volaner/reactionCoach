@@ -43,18 +43,14 @@ html .mb-5
 	margin-bottom: var(--space-5) !important;
 }
 
-:root {
-  --space-5: 5rem;
-  --space-4: 2.3rem;
-}
-
 #task
 {
 	height: 120px;
 	font-size: 80px;
 }
 
-form.register
+form.register,
+html .w-500
 {
 	width: 500px;
 }
@@ -73,4 +69,14 @@ form.register
 .table_wrap .nav-link
 {
 	color: var(--bs-success);
+}
+
+div.alert:first-child
+{
+	margin-top: var(--space-4) !important;
+}
+
+:root {
+  --space-5: 5rem;
+  --space-4: 2.3rem;
 }

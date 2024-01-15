@@ -262,6 +262,20 @@ class Form
 				})
 	    	}
 		}
+
+		// Delete user
+		let btn_delete_user = document.querySelectorAll('button.delete_user');
+
+		if(btn_delete_user != null)
+		{
+			for (let btn of btn_delete_user)
+			{
+				btn.addEventListener("click", function()
+				{
+		    		self.#pressDeleteBtn(btn);
+		    	});
+			}
+		}
 	}
 
 	#ajaxSend = async (url, formData) => {
@@ -585,6 +599,23 @@ class Form
 			{
 				form.submit()
 			}
+		}
+	}
+
+	#pressDeleteBtn(btn)
+	{
+		let form = btn.closest('form')
+		let input = form.querySelector('#answer')
+
+		if(input.value == 'Delete')
+		{
+			input.classList.remove('is-invalid')
+
+			form.submit()
+		}
+		else
+		{
+			input.classList.add('is-invalid')
 		}
 	}
 

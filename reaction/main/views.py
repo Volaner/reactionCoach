@@ -1,13 +1,14 @@
+from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
 from django.contrib.auth.models import User
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Min
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, CreateView, TemplateView
+from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 import json
 
@@ -254,8 +255,65 @@ class ChangePasswordComplete(DataMixin, TemplateView):
         return dict(list(context.items()) + list(mixin_context.items()))
 
 
-def test(request, slug: str):
-    return HttpResponse("<h1>"+ slug +"</h1>")
+class YourProfile(LoginRequiredMixin, DataMixin, UpdateView):
+    model = User
+    form_class = YourProfileForm
+    template_name = 'main/your_profile.html'
+    success_url = reverse_lazy('your_profile')
+    slug_url_kwarg = 'username'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(
+            title='Your profile',
+            description='You can change your data here',
+            h1='Edit your profile'
+        )
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+    def get_object(self, queryset=None):
+        user_id = self.request.user.pk
+        user_obj = User.objects.get(id=user_id)
+
+        return user_obj
+
+
+class DeleteUser(LoginRequiredMixin, SuccessMessageMixin, DataMixin, DeleteView):
+    model = User
+    template_name = 'main/delete_user_confirm.html'
+    success_message = 'User has been deleted'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        mixin_context = self.get_context(
+            title='Delete your account',
+            description='You can delete your account here',
+            h1='Do you really want to delete your account?'
+        )
+
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+    def get_object(self, queryset=None):
+        user_id = self.request.user.pk
+        user_obj = User.objects.get(id=user_id)
+
+        return user_obj
+
+
+# def test(request, slug: str):
+# return HttpResponse("<h1>"+ slug +"</h1>")
+def test(request):
+    messages.success(request, 'Hellow world')
+    messages.error(request, "Document deleted.")
+
+    data = {
+        'title': 'Test',
+        'description': 'This is a test page',
+        'h1': 'Test page'
+    }
+    return render(request, 'main/test.html', data)
 
 
 def logout_user(request):
