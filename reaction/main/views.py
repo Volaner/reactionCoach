@@ -57,11 +57,11 @@ class Records(DataMixin, ListView):
         return dict(list(context.items()) + list(mixin_context.items()))
 
     def get_queryset(self):
-        chart = Result.objects.values('user').filter(enable_keyboard=1).annotate(time=Min('time'))[:10]
+        chart = Result.objects.values('user').filter(enable_keyboard=1).filter(user__userprofile__show_in_records=True).annotate(time=Min('time'))[:10]
         chart_results = dict()
         chart_results['enable_keyboard'] = self.__get_user(chart)
 
-        chart = Result.objects.values('user').filter(enable_keyboard=0).annotate(time=Min('time'))[:10]
+        chart = Result.objects.values('user').filter(enable_keyboard=0).filter(user__userprofile__show_in_records=True).annotate(time=Min('time'))[:10]
         chart_results['disable_keyboard'] = self.__get_user(chart)
 
         return chart_results
