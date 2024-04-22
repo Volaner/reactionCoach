@@ -2,3 +2,4 @@
 /*.zip
 /*.rar
 **/__pycache__
+/reaction/main/migrations/*
