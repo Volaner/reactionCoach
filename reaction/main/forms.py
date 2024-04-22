@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
     PasswordChangeForm
 from django.contrib.auth.models import User
 
+from main.models import UserProfile
+
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='Login',
@@ -47,7 +49,18 @@ class ChangePassword(PasswordChangeForm):
                                     widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': ''}))
 
 
-class YourProfileForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
+    show_in_records = forms.BooleanField(label='Show your records in the main table of records',
+                                         widget=forms.CheckboxInput(
+                                             attrs={'class': 'form-check-input', 'placeholder': ''}),
+                                         required=False)
+
+    class Meta:
+        model = UserProfile
+        fields = ('show_in_records',)
+
+
+class UserEmailForm(forms.ModelForm):
     email = forms.EmailField(label='Email',
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': ''}))
 

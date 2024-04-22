@@ -16,6 +16,7 @@ class Form
 	#resetBtnClicked = 0
 	#resetConfirmBtnClicked = 0
 	#changePasswordBtnClicked = 0
+	#editProfileBtnClicked = 0
 
 	constructor(urls)
 	{
@@ -192,6 +193,46 @@ class Form
 					if(this.#changePasswordBtnClicked)
 					{
 						this.#validateNewPassword(new_password1, new_password2)
+					}
+				})
+			}
+		}
+
+		// User's profile
+		let btns_edit_profile = document.querySelectorAll('button.edit_profile');
+
+		if(btns_edit_profile != null)
+		{
+			for (let btn of btns_edit_profile)
+			{
+				let email
+				let form = btn.closest('form')
+	    		for (let input of form.getElementsByTagName('input'))
+				{
+					if(input.name == 'email')
+					{
+						email = input
+					}
+				}
+
+				self.#checkInputsValidationOnStartup(btn);
+
+				btn.addEventListener("click", () =>
+				{
+		    		this.#editProfileBtnClicked = 1
+
+					if(this.#validateEmail(email))
+					{
+						form.submit()
+					}
+		    	});
+
+				// Bind validation inputs when user change input after first edit_profile click
+				email.addEventListener('input', () => 
+				{
+					if(this.#editProfileBtnClicked)
+					{
+						this.#validateEmail(email)
 					}
 				})
 			}

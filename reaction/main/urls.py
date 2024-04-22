@@ -18,7 +18,7 @@ urlpatterns = [
     path('password_change_complete/', ChangePasswordComplete.as_view(), name='password_change_complete'),
     path('logout/', logout_user, name='logout'),
     path('register/', RegisterUser.as_view(), name='register'),
-    path('your_profile/', YourProfile.as_view(), name='your_profile'),
+    path('user_profile/', UserProfileView.as_view(), name='user_profile'),
     path('delete_user_confirm/', DeleteUser.as_view(), name='delete_user'),
     path('personal_records/', PersonalRecords.as_view(), name='personal_records'),
 ]

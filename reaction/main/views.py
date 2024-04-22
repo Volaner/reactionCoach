@@ -5,7 +5,8 @@ from django.contrib.auth.views import LoginView, PasswordResetView, PasswordRese
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Min
-from django.shortcuts import render, redirect
+from django.forms import inlineformset_factory
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
@@ -255,28 +256,45 @@ class ChangePasswordComplete(DataMixin, TemplateView):
         return dict(list(context.items()) + list(mixin_context.items()))
 
 
-class YourProfile(LoginRequiredMixin, DataMixin, UpdateView):
-    model = User
-    form_class = YourProfileForm
-    template_name = 'main/your_profile.html'
-    success_url = reverse_lazy('your_profile')
-    slug_url_kwarg = 'username'
+class UserProfileView(LoginRequiredMixin, DataMixin, UpdateView):
+    model = UserProfile
+    form_class = UserProfileForm
+    template_name = 'main/user_profile.html'
+    success_url = reverse_lazy('user_profile')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        if 'user_email_form' not in context.keys() and 'user_profile_form' not in context.keys():
+            self.object = self.get_object()
+            context['user_email_form'] = UserEmailForm(instance=self.object.user)
+            context['user_profile_form'] = UserProfileForm(instance=self.object)
+
         mixin_context = self.get_context(
             title='Your profile',
             description='You can change your data here',
-            h1='Edit your profile'
+            h1='Edit your profile',
         )
 
         return dict(list(context.items()) + list(mixin_context.items()))
 
     def get_object(self, queryset=None):
         user_id = self.request.user.pk
-        user_obj = User.objects.get(id=user_id)
+        user_obj = get_object_or_404(UserProfile, user=user_id)
 
         return user_obj
+
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        user_email_form = UserEmailForm(request.POST, instance=self.object.user)
+        user_profile_form = UserProfileForm(request.POST, instance=self.object)
+
+        if user_email_form.is_valid() and user_profile_form.is_valid():
+            user_email_form.save()
+            user_profile_form.save()
+            return self.form_valid(user_profile_form)
+        else:
+            return self.render_to_response(self.get_context_data(user_email_form=user_email_form, user_profile_form=user_profile_form))
 
 
 class DeleteUser(LoginRequiredMixin, SuccessMessageMixin, DataMixin, DeleteView):
