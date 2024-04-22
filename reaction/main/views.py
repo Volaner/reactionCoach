@@ -83,7 +83,6 @@ class PersonalRecords(LoginRequiredMixin, DataMixin, ListView):
 
 
 class RegisterUser(DataMixin, CreateView):
-    # form_class = UserCreationForm
     form_class = RegisterUserForm
     template_name = 'main/register.html'
     success_url = reverse_lazy('login')
