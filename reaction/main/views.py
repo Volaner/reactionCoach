@@ -277,10 +277,7 @@ class UserProfileView(LoginRequiredMixin, DataMixin, UpdateView):
         return dict(list(context.items()) + list(mixin_context.items()))
 
     def get_object(self, queryset=None):
-        user_id = self.request.user.pk
-        user_obj = get_object_or_404(UserProfile, user=user_id)
-
-        return user_obj
+        return get_object_or_404(UserProfile, user=self.request.user.pk)
 
 
     def post(self, request, *args, **kwargs):
@@ -290,7 +287,6 @@ class UserProfileView(LoginRequiredMixin, DataMixin, UpdateView):
 
         if user_email_form.is_valid() and user_profile_form.is_valid():
             user_email_form.save()
-            user_profile_form.save()
             return self.form_valid(user_profile_form)
         else:
             return self.render_to_response(self.get_context_data(user_email_form=user_email_form, user_profile_form=user_profile_form))
