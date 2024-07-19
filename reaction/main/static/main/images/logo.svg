@@ -1,8 +1,8 @@
+<?xml-stylesheet type="text/css" href="svg.css"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="616" height="616" viewBox="0 0 616 616">
   <defs>
     <style>
       .cls-1 {
-        fill: #f8f9fa;
         fill-rule: evenodd;
         opacity: 0.85;
       }

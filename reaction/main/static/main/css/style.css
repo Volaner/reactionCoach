@@ -80,3 +80,116 @@ div.alert:first-child
   --space-5: 5rem;
   --space-4: 2.3rem;
 }
+
+/************** Themes ****************/
+
+html[data-bs-theme="light"] .navbar
+{
+	/*background-color: var(--bs-tertiary-bg);*/
+}
+
+html[data-bs-theme="light"] .navbar,
+html[data-bs-theme="light"] .dropdown-menu
+{
+	background-color: #212529;	
+}
+html[data-bs-theme="dark"] .navbar,
+html[data-bs-theme="dark"] .dropdown-menu
+{
+/*	background-color: #f8f9fa;*/
+	background-color: #E9ECEF;
+}
+
+html[data-bs-theme="light"] .navbar .navbar-brand,
+html[data-bs-theme="light"] .navbar .navbar-nav .nav-link,
+html[data-bs-theme="light"] .dropdown-menu .dropdown-item
+{
+	color: #f8f9fa;
+}
+html[data-bs-theme="dark"] .navbar .navbar-brand,
+html[data-bs-theme="dark"] .navbar .navbar-nav .nav-link,
+html[data-bs-theme="dark"] .dropdown-menu .dropdown-item
+{
+	color: #212529;
+}
+
+html[data-bs-theme="light"] .navbar .navbar-nav .nav-link:hover
+{
+	color: #adb5bd;
+}
+html[data-bs-theme="dark"] .navbar .navbar-nav .nav-link:hover
+{
+	color: #707070;
+}
+
+html[data-bs-theme="light"] .dropdown-menu .dropdown-item:hover
+{
+	background-color: #495057;
+}
+html[data-bs-theme="light"] .dropdown-item.active
+{
+	background-color: #6C757D;
+}
+html[data-bs-theme="dark"] .dropdown-menu .dropdown-item:hover
+{
+	background-color: #6C757D;
+}
+html[data-bs-theme="dark"] .dropdown-item.active
+{
+	background-color: #ADB5BD;
+}
+
+.dropdown-menu .dropdown-item.active
+{
+	background-color: var(--bs-success);
+}
+
+html[data-bs-theme="dark"] .navbar .btn-light
+{
+	--bs-btn-color: #fff;
+	--bs-btn-bg: #212529;
+	--bs-btn-border-color: #212529;
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: #424649;
+	--bs-btn-hover-border-color: #373b3e;
+	--bs-btn-focus-shadow-rgb: 66,70,73;
+}
+
+.navbar-brand svg
+{
+	width: 30px;
+	height: 24px;
+}
+.cls-1
+{
+}
+html[data-bs-theme="dark"] .cls-1
+{
+	fill: #212529;
+}
+html[data-bs-theme="light"] .cls-1
+{
+	fill: #f8f9fa;
+}
+
+html[data-bs-theme="dark"] .footer
+{
+	background-color: #E9ECEF;
+	color: #212529;
+}
+html[data-bs-theme="light"] .footer
+{
+	background-color: #212529;
+	color: #f8f9fa;
+}
+
+html[data-bs-theme="dark"] .btn_task
+{
+	border-color: #E9ECEF;
+	color: #E9ECEF;
+}
+html[data-bs-theme="dark"] .btn_task:hover
+{
+	background-color: #E9ECEF;
+	color: #212529;
+}

@@ -1,7 +1,127 @@
-{% extends 'main/base.html' %}
+{% comment %}{% extends 'main/base.html' %}
 
 {% block content %}
 	<div class="row pt-5 pb-3">
         <h1 class="text-center mb-4">{{ h1 }}</h1>
     </div>
 {% endblock %}
+{% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/images/logo.svg' %}"/>
+    <title>Test</title>
+    <link href="{% static 'main/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
+
+    <!--<link href="{% static 'main/css/style.css' %}" type="text/css" rel="stylesheet"/>-->
+    <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'main/js/coach.js' %}"></script>
+    <script src="{% static 'main/js/form.js' %}"></script>
+    <script src="{% static 'main/js/cookie.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row pt-5 pb-5">
+        <h1 class="text-center">Table</h1>
+    </div>
+    <div class="row justify-content-center pb-5">
+        <div class="table_wrap">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">With keyboard</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Only mouse</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <table class="personal_all table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Average time (seconds)</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>guest</td>
+                                    <td>0.489</td>
+                                    <td>10.11.2023 17:58</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Tom</td>
+                                    <td>0.504</td>
+                                    <td>18.09.2023 20:26</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade show" id="contact-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <table class="personal_all table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Average time (seconds)</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>guest</td>
+                                    <td>0.489</td>
+                                    <td>10.11.2023 17:58</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Tom</td>
+                                    <td>0.504</td>
+                                    <td>18.09.2023 20:26</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
