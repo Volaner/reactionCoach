@@ -1,4 +1,5 @@
 /.idea/*
+/venv/*
 /*.zip
 /*.rar
 **/__pycache__
