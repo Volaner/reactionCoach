@@ -4,3 +4,4 @@
 /*.rar
 **/__pycache__
 /reaction/main/migrations/*
+/reaction/reaction/wsgi.py
