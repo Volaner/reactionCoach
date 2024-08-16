@@ -5,3 +5,4 @@
 **/__pycache__
 /reaction/main/migrations/*
 /reaction/reaction/wsgi.py
+/reaction/reaction/settings.py
