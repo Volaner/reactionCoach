@@ -193,3 +193,16 @@ html[data-bs-theme="dark"] .btn_task:hover
 	background-color: #E9ECEF;
 	color: #212529;
 }
+
+html[data-bs-theme="dark"] .btn-dark
+{
+	border-color: #f8f9fa;
+	background-color: #f8f9fa;
+	color: #000;
+}
+html[data-bs-theme="dark"] .btn-dark:hover
+{
+	border-color: #c6c7c8;
+	background-color: #d3d4d5;
+	color: #000;
+}
